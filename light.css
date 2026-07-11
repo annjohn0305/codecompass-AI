@@ -1,0 +1,315 @@
+/* Light Mode Theme */
+:root.light-mode {
+    --bg: #ffffff;
+    --bg-soft: #f8fafb;
+    --sidebar: #f3f4f6;
+    --surface: #ffffff;
+    --surface-strong: #e5e7eb;
+    --border: rgba(31, 41, 55, 0.1);
+    --border-strong: rgba(16, 185, 129, 0.2);
+    --text: #1f2937;
+    --muted: #6b7280;
+    --soft: #9ca3af;
+    --accent: #14b8a6;
+    --accent-bright: #0f766e;
+    --accent-strong: #0d9488;
+    --gold: #d97706;
+    --danger: #dc2626;
+    --warning: #f59e0b;
+    --shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+    --radius: 12px;
+}
+
+:root.light-mode body {
+    background:
+        radial-gradient(circle at top left, rgba(20, 184, 166, 0.08), transparent 32rem),
+        radial-gradient(circle at 92% 14%, rgba(217, 119, 6, 0.06), transparent 30rem),
+        linear-gradient(135deg, #ffffff, #f9fafb 52%, #f3f4f6);
+    color: var(--text);
+}
+
+/* Adjust specific components for light mode */
+:root.light-mode .sidebar {
+    background: linear-gradient(180deg, rgba(0, 0, 0, 0.02), transparent), var(--sidebar);
+    border-right: 1px solid var(--border);
+}
+
+:root.light-mode .sidebar-logo span {
+    color: #d97706;
+}
+
+:root.light-mode .nav-icon {
+    background: rgba(217, 119, 6, 0.1);
+    color: #d97706;
+}
+
+:root.light-mode .sidebar li:hover,
+:root.light-mode .sidebar li:focus-within,
+:root.light-mode .sidebar .active {
+    background: rgba(16, 185, 129, 0.08);
+}
+
+:root.light-mode .top-bar {
+    background: rgba(255, 255, 255, 0.6);
+    border-bottom: 1px solid var(--border);
+}
+
+:root.light-mode .new-project-btn {
+    background: linear-gradient(135deg, var(--accent), var(--accent-strong));
+    color: white;
+}
+
+:root.light-mode .stat-card {
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.8), rgba(245, 247, 250, 0.8));
+    border: 1px solid var(--border);
+}
+
+:root.light-mode .panel {
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.7), rgba(248, 250, 252, 0.7));
+    border: 1px solid var(--border);
+}
+
+:root.light-mode .btn-primary {
+    background: var(--accent);
+    color: white;
+}
+
+:root.light-mode .btn-primary:hover {
+    background: var(--accent-strong);
+}
+
+:root.light-mode input,
+:root.light-mode textarea,
+:root.light-mode select {
+    background: white;
+    border: 1px solid var(--border);
+    color: var(--text);
+}
+
+:root.light-mode input:focus,
+:root.light-mode textarea:focus,
+:root.light-mode select:focus {
+    border-color: var(--accent);
+    box-shadow: 0 0 0 3px rgba(20, 184, 166, 0.1);
+}
+
+:root.light-mode .chat-msg.assistant {
+    background: #f0fdf4;
+    color: #166534;
+    border-left: 3px solid var(--accent);
+}
+
+:root.light-mode .chat-msg.user {
+    background: #f0f9ff;
+    color: #0c4a6e;
+}
+
+:root.light-mode .project-card {
+    background: white;
+    border: 1px solid var(--border);
+}
+
+:root.light-mode .badge {
+    background: rgba(16, 185, 129, 0.1);
+    color: var(--accent-strong);
+}
+
+:root.light-mode .loading-spinner {
+    border-color: rgba(20, 184, 166, 0.2);
+    border-top-color: var(--accent);
+}
+
+:root.light-mode code {
+    background: #f3f4f6;
+    color: #7c3aed;
+}
+
+:root.light-mode pre {
+    background: #1f2937;
+    color: #f3f4f6;
+}
+
+:root.light-mode hr {
+    border-color: var(--border);
+}
+
+:root.light-mode .health-score .circle {
+    background: rgba(20, 184, 166, 0.08);
+    border: 2px solid var(--accent);
+    color: var(--accent-strong);
+}
+
+:root.light-mode .progress-bar {
+    background: rgba(20, 184, 166, 0.1);
+}
+
+:root.light-mode .progress-bar .progress {
+    background: linear-gradient(90deg, var(--accent), var(--accent-bright));
+}
+
+/* Navbar styling for light mode */
+:root.light-mode .navbar {
+    background: rgba(255, 255, 255, 0.7);
+    border-bottom: 1px solid var(--border);
+    backdrop-filter: blur(18px);
+}
+
+:root.light-mode .logo-container {
+    color: var(--text);
+}
+
+:root.light-mode .logo-container span {
+    color: var(--gold);
+}
+
+/* Auth buttons */
+:root.light-mode .auth-btn,
+:root.light-mode .btn-primary,
+:root.light-mode button {
+    transition: all 200ms ease;
+}
+
+:root.light-mode .btn-primary:active {
+    transform: scale(0.98);
+}
+
+/* Card styles */
+:root.light-mode .project-card,
+:root.light-mode .analysis-card,
+:root.light-mode .stat-card {
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+}
+
+/* Modal/dialog */
+:root.light-mode [role="dialog"],
+:root.light-mode .modal {
+    background: white;
+    border: 1px solid var(--border);
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.12);
+}
+
+/* Scrollbar */
+:root.light-mode ::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+}
+
+:root.light-mode ::-webkit-scrollbar-track {
+    background: rgba(0, 0, 0, 0.02);
+}
+
+:root.light-mode ::-webkit-scrollbar-thumb {
+    background: rgba(16, 185, 129, 0.3);
+    border-radius: 5px;
+}
+
+:root.light-mode ::-webkit-scrollbar-thumb:hover {
+    background: rgba(16, 185, 129, 0.5);
+}
+
+/* Table styling */
+:root.light-mode table {
+    border-collapse: collapse;
+}
+
+:root.light-mode th {
+    background: rgba(16, 185, 129, 0.05);
+    color: var(--text);
+}
+
+:root.light-mode td {
+    border-bottom: 1px solid var(--border);
+}
+
+:root.light-mode tbody tr:hover {
+    background: rgba(16, 185, 129, 0.03);
+}
+
+/* Badge/tag styling */
+:root.light-mode .badge,
+:root.light-mode .tag {
+    background: rgba(16, 185, 129, 0.1);
+    color: var(--accent-strong);
+    border: 1px solid rgba(16, 185, 129, 0.2);
+}
+
+/* Alert/message boxes */
+:root.light-mode .alert,
+:root.light-mode .message {
+    border-left: 4px solid var(--accent);
+}
+
+:root.light-mode .alert-success {
+    background: #f0fdf4;
+    border-left-color: #16a34a;
+    color: #166534;
+}
+
+:root.light-mode .alert-error {
+    background: #fef2f2;
+    border-left-color: #dc2626;
+    color: #991b1b;
+}
+
+:root.light-mode .alert-warning {
+    background: #fffbeb;
+    border-left-color: #f59e0b;
+    color: #92400e;
+}
+
+:root.light-mode .alert-info {
+    background: #f0f9ff;
+    border-left-color: var(--accent);
+    color: #0c4a6e;
+}
+
+/* Loading spinner */
+:root.light-mode .loading-spinner,
+:root.light-mode .spinner {
+    border: 3px solid rgba(16, 185, 129, 0.2);
+    border-top-color: var(--accent);
+}
+
+/* Link styles */
+:root.light-mode a {
+    color: var(--accent-strong);
+}
+
+:root.light-mode a:hover {
+    color: var(--accent);
+}
+
+:root.light-mode a:visited {
+    color: #0f5f5a;
+}
+
+/* Disabled state */
+:root.light-mode :disabled,
+:root.light-mode .disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+/* Toolbar/menu */
+:root.light-mode .toolbar,
+:root.light-mode .menu {
+    background: white;
+    border: 1px solid var(--border);
+}
+
+/* Heading adjustments */
+:root.light-mode h1,
+:root.light-mode h2,
+:root.light-mode h3,
+:root.light-mode h4,
+:root.light-mode h5,
+:root.light-mode h6 {
+    color: var(--text);
+}
+
+/* Code block in light mode - keep dark for contrast */
+:root.light-mode .code-block {
+    background: #2d3748;
+    color: #e2e8f0;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+}

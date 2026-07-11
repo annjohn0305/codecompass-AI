@@ -1,0 +1,162 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>
+        Analyzing Project - CodeCompass AI
+    </title>
+
+    <link rel="stylesheet"
+          href="{% static 'css/analysis.css' %}\">
+    <link rel=\"stylesheet\" href=\"{% static 'css/light.css' %}?v=1\">
+    <link rel=\"stylesheet\" href=\"{% static 'css/theme-toggle.css' %}?v=1\">
+    <script src=\"{% static 'js/theme.js' %}?v=1\"></script>>
+
+</head>
+
+<body>
+
+<div class="container">
+
+    <div class="analysis-card">
+
+        <h1>
+            🤖 AI Analysis In Progress
+        </h1>
+
+        <p>
+            CodeCompass AI is analyzing your project using
+            LangGraph Agents, Qwen AI and ChromaDB.
+        </p>
+
+        <!-- Progress Circle -->
+
+        <div class="circle">
+
+            <div
+                class="progress-value"
+                id="progress-value"
+            >
+                0%
+            </div>
+
+        </div>
+
+        <h3 id="current-step">
+
+            📂 Extracting Project Files...
+
+        </h3>
+
+        <!-- Steps -->
+
+        <div class="steps">
+
+            <div class="step">
+                📂 Extracting Project Files
+            </div>
+
+            <div class="step">
+                🧠 Architecture Agent
+            </div>
+
+            <div class="step">
+                ⚙ Technical Debt Agent
+            </div>
+
+            <div class="step">
+                ⚠ Risk Prediction Agent
+            </div>
+
+            <div class="step">
+                💡 Recommendation Agent
+            </div>
+
+            <div class="step">
+                🤖 Qwen AI Finalizing Report
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<script>
+
+let progress = 0;
+
+const progressValue =
+document.getElementById(
+    "progress-value"
+);
+
+const currentStep =
+document.getElementById(
+    "current-step"
+);
+
+const steps = [
+
+    "📂 Extracting Project Files...",
+
+    "🧠 Architecture Agent Analyzing Structure...",
+
+    "⚙ Technical Debt Agent Evaluating Maintainability...",
+
+    "⚠ Risk Agent Predicting Project Risks...",
+
+    "💡 Recommendation Agent Generating Improvements...",
+
+    "🤖 Qwen AI Preparing Final Report..."
+
+];
+
+let stepIndex = 0;
+
+const interval = setInterval(() => {
+
+    progress += 2;
+
+    progressValue.innerText =
+        progress + "%";
+
+    if (
+
+        progress % 16 === 0 &&
+
+        stepIndex < steps.length
+
+    ) {
+
+        currentStep.innerText =
+            steps[stepIndex];
+
+        stepIndex++;
+
+    }
+
+    if (progress >= 100) {
+
+        clearInterval(
+            interval
+        );
+
+        window.location.href =
+            "/analysis/";
+
+    }
+
+}, 1200);
+
+</script>
+
+</body>
+</html>

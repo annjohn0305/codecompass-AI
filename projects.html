@@ -1,0 +1,147 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Projects - CodeCompass AI</title>
+
+    <link rel="stylesheet" href="{% static 'css/dashboard.css' %}">
+</head>
+<body>
+
+<div class="dashboard-container">
+
+    <!-- Sidebar -->
+
+    <aside class="sidebar">
+
+        <div class="sidebar-logo">
+            <img src="{% static 'images/logo.png' %}" alt="logo">
+            <span>CodeCompass AI</span>
+        </div>
+
+        <ul>
+
+            <li>
+                <a href="{% url 'dashboard' %}">
+                    📊 Dashboard
+                </a>
+            </li>
+
+            <li class="active">
+                📂 Projects
+            </li>
+
+            <li>📅 Timeline</li>
+
+            <li>⚠ Risks</li>
+
+            <li>💡 Recommendations</li>
+
+            <li>📑 Reports</li>
+
+            <li>🧠 What-If Simulator</li>
+
+            <li>⚙ Settings</li>
+
+        </ul>
+
+    </aside>
+
+    <!-- Main Content -->
+
+    <main class="main-content">
+
+        <div class="top-bar">
+
+            <div>
+
+                <h1>My Projects</h1>
+
+                <p>
+                    Welcome,
+                    {{ request.user.first_name }}
+                </p>
+
+            </div>
+
+            <a href="{% url 'upload' %}">
+                <button class="new-project-btn">
+                    + New Project
+                </button>
+            </a>
+
+        </div>
+
+        <!-- Projects Table -->
+
+        <div class="recent-projects">
+
+            <h2 style="margin-bottom:20px;">
+                Uploaded Projects
+            </h2>
+
+            <table>
+
+                <thead>
+
+                    <tr>
+
+                        <th>Project Name</th>
+
+                        <th>GitHub URL</th>
+
+                        <th>Created</th>
+
+                    </tr>
+
+                </thead>
+
+                <tbody>
+
+                {% for project in projects %}
+
+                    <tr>
+
+                        <td>
+                            {{ project.name }}
+                        </td>
+
+                        <td>
+                            {{ project.github_url }}
+                        </td>
+
+                        <td>
+                            {{ project.created_at }}
+                        </td>
+
+                    </tr>
+
+                {% empty %}
+
+                    <tr>
+
+                        <td colspan="3">
+
+                            No projects uploaded yet.
+
+                        </td>
+
+                    </tr>
+
+                {% endfor %}
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </main>
+
+</div>
+
+</body>
+</html>

@@ -1,0 +1,114 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>What-If Simulator - CodeCompass AI</title>
+    <link rel="stylesheet" href="{% static 'css/report.css' %}?v=6">
+    <link rel="stylesheet" href="{% static 'css/light.css' %}?v=1">
+    <link rel="stylesheet" href="{% static 'css/theme-toggle.css' %}?v=1">
+    <script src="{% static 'js/theme.js' %}?v=1"></script>
+    <link rel="stylesheet" href="{% static 'css/what_if.css' %}?v=6">
+</head>
+
+<body>
+
+<div class="container">
+
+    <aside class="sidebar">
+        <div class="sidebar-logo">
+            <img src="{% static 'images/logo.png' %}" alt="Logo">
+            <span>CodeCompass AI</span>
+        </div>
+
+        <ul class="sidebar-nav">
+            <li><a href="{% url 'dashboard' %}"><span class="nav-icon">D</span><span>Dashboard</span></a></li>
+            <li><a href="{% url 'projects' %}"><span class="nav-icon">P</span><span>Projects</span></a></li>
+            <li><a href="{% url 'timeline' project.id %}"><span class="nav-icon">T</span><span>Timeline</span></a></li>
+            <li><a href="{% url 'risks' project.id %}"><span class="nav-icon">R</span><span>Risks</span></a></li>
+            <li><a href="{% url 'recommendations' project.id %}"><span class="nav-icon">I</span><span>Recommendations</span></a></li>
+            <li><a href="{% url 'project_report' project.id %}"><span class="nav-icon">A</span><span>Reports</span></a></li>
+            <li class="active"><span class="nav-icon">W</span><span>What-If Simulator</span></li>
+            <li><a href="{% url 'settings' %}"><span class="nav-icon">S</span><span>Settings</span></a></li>
+        </ul>
+    </aside>
+
+    <main class="main-content">
+
+        <div class="report-header">
+            <div>
+                <span class="eyebrow">Scenario Planning</span>
+                <h1>What-If Simulator</h1>
+                <p>Test a technical decision against <strong>{{ project.name }}</strong>.</p>
+            </div>
+
+            <div class="header-actions">
+                <label for="project-select">Project</label>
+                <select id="project-select" class="project-select" data-route-base="/what-if/">
+                    {% for p in projects %}
+                    <option value="{{ p.id }}" {% if project.id == p.id %}selected{% endif %}>
+                        {{ p.name }}
+                    </option>
+                    {% endfor %}
+                </select>
+            </div>
+        </div>
+
+        <section class="panel">
+            <h3>Try a scenario</h3>
+
+            <form id="what-if-form" autocomplete="off">
+                {% csrf_token %}
+
+                <label class="project-label" for="scenario_input">What happens if we use</label>
+                <input
+                    id="scenario_input"
+                    name="scenario_input"
+                    type="text"
+                    placeholder="React instead of plain JS, or migrate to Django"
+                    required
+                >
+
+                <label class="project-label" for="scenario_type">Scenario type</label>
+                <select id="scenario_type" name="scenario_type">
+                    <option value="technology_swap" selected>Technology Swap</option>
+                    <option value="performance">Performance</option>
+                    <option value="maintainability">Maintainability</option>
+                    <option value="security">Security</option>
+                    <option value="migration">Migration / Migration Effort</option>
+                    <option value="risk">Risk Assessment</option>
+                </select>
+
+                <button type="submit" class="download-btn">
+                    Simulate
+                </button>
+            </form>
+        </section>
+
+        <section class="panel results-panel">
+            <h3>Possible Outcomes</h3>
+            <div id="what-if-status"></div>
+            <div id="what-if-results"></div>
+
+            <script>
+                window.__PROJECT_ID__ = {{ project.id }};
+            </script>
+        </section>
+
+        <div class="back-btn-container">
+            <a href="{% url 'project_report' project.id %}" class="back-btn">Back to Report</a>
+        </div>
+
+    </main>
+
+</div>
+
+<script src="{% static 'js/project_switcher.js' %}?v=1"></script>
+<script src="{% static 'js/what_if.js' %}?v=6"></script>
+
+</body>
+
+</html>

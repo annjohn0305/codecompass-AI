@@ -1,0 +1,105 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Project Report - CodeCompass AI</title>
+    <link rel="stylesheet" href="{% static 'css/report.css' %}?v=6">    <link rel="stylesheet" href="{% static 'css/light.css' %}?v=1">
+    <link rel="stylesheet" href="{% static 'css/theme-toggle.css' %}?v=1">    <script src="{% static 'js/theme.js' %}?v=1"></script>
+</head>
+
+<body>
+
+<div class="container">
+
+    <aside class="sidebar">
+
+        <div class="sidebar-logo">
+            <img src="{% static 'images/logo.png' %}" alt="Logo">
+            <span>CodeCompass AI</span>
+        </div>
+
+        <ul class="sidebar-nav">
+            <li><a href="{% url 'dashboard' %}"><span class="nav-icon">D</span><span>Dashboard</span></a></li>
+            <li><a href="{% url 'projects' %}"><span class="nav-icon">P</span><span>Projects</span></a></li>
+            {% if project %}
+            <li><a href="{% url 'timeline' project.id %}"><span class="nav-icon">T</span><span>Timeline</span></a></li>
+            <li><a href="{% url 'risks' project.id %}"><span class="nav-icon">R</span><span>Risks</span></a></li>
+            <li><a href="{% url 'recommendations' project.id %}"><span class="nav-icon">I</span><span>Recommendations</span></a></li>
+            {% endif %}
+            <li class="active"><span class="nav-icon">A</span><span>Reports</span></li>
+            {% if project %}
+            <li><a href="{% url 'what_if_page' project.id %}"><span class="nav-icon">W</span><span>What-If Simulator</span></a></li>
+            {% else %}
+            <li class="disabled"><span class="nav-icon">W</span><span>What-If Simulator</span></li>
+            {% endif %}
+            <li><a href="{% url 'settings' %}"><span class="nav-icon">S</span><span>Settings</span></a></li>
+        </ul>
+
+    </aside>
+
+    <main class="main-content">
+
+        <div class="report-header">
+
+            <div>
+                <span class="eyebrow">Analysis Report</span>
+                <h1>Project Report</h1>
+                <p>
+                    {% if project %}
+                        Analysis report for <strong>{{ project.name }}</strong>
+                    {% else %}
+                        No project selected
+                    {% endif %}
+                </p>
+            </div>
+
+            <div class="header-actions">
+                <label for="project-select">Project</label>
+                <select id="project-select" class="project-select" data-route-base="/report/">
+                    {% for p in projects %}
+                    <option value="{{ p.id }}" {% if project.id == p.id %}selected{% endif %}>
+                        {{ p.name }}
+                    </option>
+                    {% endfor %}
+                </select>
+                <a href="{% url 'download_pdf' %}" class="download-btn">Download PDF</a>
+            </div>
+
+        </div>
+
+        <div class="summary-grid">
+            <div class="summary-card"><h4>Health Score</h4><h2>{% if analysis %}{{ analysis.health_score }}%{% else %}0%{% endif %}</h2><span class="green">Project Health</span></div>
+            <div class="summary-card"><h4>Risk Score</h4><h2>{% if analysis %}{% if analysis.risks_found > 5 %}High{% elif analysis.risks_found > 0 %}Medium{% else %}Low{% endif %}{% else %}Low{% endif %}</h2><span class="yellow">Risk Assessment</span></div>
+            <div class="summary-card"><h4>Code Quality</h4><h2>{% if analysis %}{% if analysis.lines_of_code < 1000 %}A{% elif analysis.lines_of_code < 3000 %}B{% else %}C{% endif %}{% else %}A{% endif %}</h2><span class="green">Based on LOC</span></div>
+            <div class="summary-card"><h4>Maintainability</h4><h2>{% if analysis %}{% if analysis.health_score >= 90 %}A{% elif analysis.health_score >= 75 %}B{% else %}C{% endif %}{% else %}A{% endif %}</h2><span class="green">Maintainability Grade</span></div>
+        </div>
+
+        <div class="summary-grid compact">
+            <div class="summary-card"><h4>Total Files</h4><h2>{% if analysis %}{{ analysis.total_files }}{% else %}0{% endif %}</h2></div>
+            <div class="summary-card"><h4>Lines Of Code</h4><h2>{% if analysis %}{{ analysis.lines_of_code }}{% else %}0{% endif %}</h2></div>
+        </div>
+
+        <div class="report-grid">
+            <div class="panel"><h3>Architecture Agent</h3><p>{% if analysis %}{{ analysis.architecture_report|linebreaksbr }}{% else %}No analysis available.{% endif %}</p></div>
+            <div class="panel"><h3>Technical Debt Agent</h3><p>{% if analysis %}{{ analysis.technical_debt_report|linebreaksbr }}{% else %}No analysis available.{% endif %}</p></div>
+            <div class="panel"><h3>Risk Prediction Agent</h3><p>{% if analysis %}{{ analysis.risk_report|linebreaksbr }}{% else %}No analysis available.{% endif %}</p></div>
+            <div class="panel"><h3>Recommendation Agent</h3><p>{% if analysis %}{{ analysis.recommendation_report|linebreaksbr }}{% else %}No analysis available.{% endif %}</p></div>
+        </div>
+
+        <div class="back-btn-container">
+            <a href="{% url 'dashboard' %}" class="back-btn">Back to Dashboard</a>
+        </div>
+
+    </main>
+
+</div>
+
+<script src="{% static 'js/project_switcher.js' %}?v=1"></script>
+
+</body>
+
+</html>

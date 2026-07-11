@@ -1,0 +1,371 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - CodeCompass AI</title>
+    <link rel="stylesheet" href="{% static 'css/dashboard.css' %}?v=4">
+    <link rel="stylesheet" href="{% static 'css/light.css' %}?v=1">
+    <link rel="stylesheet" href="{% static 'css/theme-toggle.css' %}?v=1">
+    <script src="{% static 'js/theme.js' %}?v=1"></script>
+</head>
+
+<body>
+
+<div class="container">
+
+    <aside class="sidebar">
+
+        <div class="sidebar-logo">
+            <img src="{% static 'images/logo.png' %}" alt="logo">
+            <span>CodeCompass AI</span>
+        </div>
+
+        <ul class="sidebar-nav">
+
+            <li class="active">
+                <span class="nav-icon">D</span>
+                <span>Dashboard</span>
+            </li>
+
+            <li>
+                <a href="{% url 'projects' %}">
+                    <span class="nav-icon">P</span>
+                    <span>Projects</span>
+                </a>
+            </li>
+
+            {% if latest_project %}
+
+            <li>
+                <a href="{% url 'timeline' latest_project.id %}">
+                    <span class="nav-icon">T</span>
+                    <span>Timeline</span>
+                </a>
+            </li>
+
+            <li>
+                <a href="{% url 'risks' latest_project.id %}">
+                    <span class="nav-icon">R</span>
+                    <span>Risks</span>
+                </a>
+            </li>
+
+            <li>
+                <a href="{% url 'recommendations' latest_project.id %}">
+                    <span class="nav-icon">I</span>
+                    <span>Recommendations</span>
+                </a>
+            </li>
+
+            <li>
+                <a href="{% url 'report' %}">
+                    <span class="nav-icon">A</span>
+                    <span>Reports</span>
+                </a>
+            </li>
+
+            <li>
+                <a href="{% url 'what_if_page' latest_project.id %}">
+                    <span class="nav-icon">W</span>
+                    <span>What-If Simulator</span>
+                </a>
+            </li>
+
+            {% else %}
+
+            <li class="disabled">
+                <span class="nav-icon">T</span>
+                <span>Timeline</span>
+            </li>
+
+            <li class="disabled">
+                <span class="nav-icon">R</span>
+                <span>Risks</span>
+            </li>
+
+            <li class="disabled">
+                <span class="nav-icon">I</span>
+                <span>Recommendations</span>
+            </li>
+
+            <li class="disabled">
+                <span class="nav-icon">A</span>
+                <span>Reports</span>
+            </li>
+
+            <li class="disabled">
+                <span class="nav-icon">W</span>
+                <span>What-If Simulator</span>
+            </li>
+
+            {% endif %}
+
+            <li class="disabled">
+                <span class="nav-icon">S</span>
+                <span>Settings</span>
+            </li>
+
+        </ul>
+
+    </aside>
+
+    <main class="main-content">
+
+        <div class="top-bar">
+
+            <div>
+                <p class="eyebrow">Workspace Overview</p>
+                <h1>Dashboard</h1>
+                <p>
+                    Welcome back, {{ request.user.first_name|default:"there" }}.
+                </p>
+            </div>
+
+            <a href="{% url 'upload' %}" class="new-project-btn">
+                New Project
+            </a>
+
+        </div>
+
+        <button id="project-chat-toggle" type="button">Ask about a project</button>
+
+        <div id="project-chat-widget" data-open="false">
+            <div id="project-chat-header">
+                <h4>Project Q&A</h4>
+                <div id="project-chat-row">
+                    <select id="project-chat-project" aria-label="Select project">
+                        <option value="">Select a project...</option>
+                        {% for p in projects %}
+                            <option value="{{ p.id }}">{{ p.name }}</option>
+                        {% empty %}
+                            <option value="">No projects available</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div id="project-chat-status"></div>
+            </div>
+
+            <div id="project-chat-body">
+                <div class="chat-msg assistant">
+                    Select a project, then ask a question. Example: What are the top risks in this project?
+                </div>
+            </div>
+
+            <form id="project-chat-form">
+
+                {% csrf_token %}
+
+                <input
+                    id="project-chat-input"
+                    type="text"
+                    placeholder="Type your question..."
+                    autocomplete="off"
+                />
+
+                <button id="project-chat-send" type="submit">
+                    Send
+                </button>
+
+            </form>
+        </div>
+
+        <div class="stats-grid">
+
+            <div class="stat-card">
+                <span class="stat-kicker">Portfolio</span>
+                <h4>Total Projects</h4>
+                <h2>{{ project_count }}</h2>
+            </div>
+
+            <div class="stat-card">
+                <span class="stat-kicker">Quality</span>
+                <h4>Health Score</h4>
+                <h2>
+                    {% if analysis %}
+                        {{ analysis.health_score }}%
+                    {% else %}
+                        0%
+                    {% endif %}
+                </h2>
+            </div>
+
+            <div class="stat-card">
+                <span class="stat-kicker">Attention</span>
+                <h4>Risks Detected</h4>
+                <h2>
+                    {% if analysis %}
+                        {{ analysis.risks_found }}
+                    {% else %}
+                        0
+                    {% endif %}
+                </h2>
+            </div>
+
+            <div class="stat-card">
+                <span class="stat-kicker">Next Steps</span>
+                <h4>Recommendations</h4>
+                <h2>
+                    {% if analysis %}
+                        {{ analysis.recommendations }}
+                    {% else %}
+                        0
+                    {% endif %}
+                </h2>
+            </div>
+
+        </div>
+
+        <div class="dashboard-grid">
+
+            <div class="panel">
+
+                <div class="panel-header">
+                    <div>
+                        <p class="eyebrow">Current Project</p>
+                        <h3>Project Health Overview</h3>
+                    </div>
+                </div>
+
+                <div
+                    class="health-score"
+                    data-health-score="{% if analysis %}{{ analysis.health_score }}{% else %}0{% endif %}"
+                >
+
+                    <div class="circle">
+                        {% if analysis %}
+                            {{ analysis.health_score }}%
+                        {% else %}
+                            0%
+                        {% endif %}
+                    </div>
+
+                    <div class="progress-bar">
+                        <div class="progress"></div>
+                    </div>
+
+                    <p>
+                        Technologies:
+                        <strong>
+                            {% if analysis %}
+                                {{ analysis.technologies }}
+                            {% else %}
+                                Not Available
+                            {% endif %}
+                        </strong>
+                    </p>
+
+                </div>
+
+            </div>
+
+            <div class="panel">
+
+                <div class="panel-header">
+                    <div>
+                        <p class="eyebrow">Signals</p>
+                        <h3>Top Risks</h3>
+                    </div>
+                </div>
+
+                <ul class="risk-list">
+
+                    {% if analysis %}
+
+                        {% if analysis.risks_found == 0 %}
+                            <li><span class="risk-dot ok"></span>No major risks detected</li>
+                        {% elif analysis.risks_found == 1 %}
+                            <li><span class="risk-dot warn"></span>Minor project risk detected</li>
+                        {% elif analysis.risks_found == 2 %}
+                            <li><span class="risk-dot medium"></span>Medium project risk detected</li>
+                        {% else %}
+                            <li><span class="risk-dot high"></span>High project risk detected</li>
+                        {% endif %}
+
+                    {% else %}
+
+                        <li><span class="risk-dot muted"></span>No analysis available</li>
+
+                    {% endif %}
+
+                </ul>
+
+            </div>
+
+        </div>
+
+        <div class="recent-projects">
+
+            <div class="panel-header">
+                <div>
+                    <p class="eyebrow">History</p>
+                    <h3>Recent Projects</h3>
+                </div>
+            </div>
+
+            <div class="table-wrap">
+                <table>
+
+                    <thead>
+                        <tr>
+                            <th>Project</th>
+                            <th>Technology</th>
+                            <th>Health</th>
+                            <th>Created</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        {% for project in projects %}
+
+                        <tr>
+
+                            <td>{{ project.name }}</td>
+
+                            <td>
+                                {% if project.analysis %}
+                                    {{ project.analysis.technologies }}
+                                {% else %}
+                                    N/A
+                                {% endif %}
+                            </td>
+
+                            <td>
+                                {% if project.analysis %}
+                                    <span class="health-pill">{{ project.analysis.health_score }}%</span>
+                                {% else %}
+                                    N/A
+                                {% endif %}
+                            </td>
+
+                            <td>{{ project.created_at|date:"M d, Y" }}</td>
+
+                        </tr>
+
+                        {% empty %}
+
+                        <tr>
+                            <td colspan="4">No projects uploaded yet</td>
+                        </tr>
+
+                        {% endfor %}
+                    </tbody>
+
+                </table>
+            </div>
+
+        </div>
+
+    </main>
+
+</div>
+
+<script src="{% static 'js/dashboard_chat.js' %}"></script>
+<script src="{% static 'js/dashboard_ui.js' %}?v=1"></script>
+
+</body>
+
+</html>

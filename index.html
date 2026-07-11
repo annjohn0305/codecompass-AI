@@ -1,0 +1,139 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CodeCompass AI</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}?v=5">
+    <link rel="stylesheet" href="{% static 'css/light.css' %}?v=1">
+    <link rel="stylesheet" href="{% static 'css/theme-toggle.css' %}?v=1">
+    <script src="{% static 'js/theme.js' %}?v=1"></script>
+</head>
+
+<body>
+
+    <nav class="navbar">
+
+        <a class="logo-container" href="{% url 'home' %}">
+            <img src="{% static 'images/logo.png' %}" alt="CodeCompass Logo">
+            <span>CodeCompass AI</span>
+        </a>
+
+        <ul class="nav-links">
+            <li><a href="#features">Features</a></li>
+            <li><a href="#how-it-works">How It Works</a></li>
+            <li><a href="{% url 'login' %}">Login</a></li>
+        </ul>
+
+    </nav>
+
+    <section class="hero">
+
+        <div class="hero-content">
+
+            <span class="badge">AI Project Intelligence</span>
+
+            <h1>
+                Understand your codebase before it slows you down.
+            </h1>
+
+            <p>
+                Upload a project, uncover risk, track architecture signals, and get practical recommendations in one focused workspace.
+            </p>
+
+            <div class="hero-buttons">
+
+                <a href="{% url 'signup' %}" class="btn-primary">
+                    Get Started
+                </a>
+
+                <a href="{% url 'demo' %}" class="btn-secondary">
+                    View Demo
+                </a>
+
+            </div>
+
+        </div>
+
+    </section>
+
+    <section id="features" class="features">
+
+        <div class="section-heading">
+            <span class="eyebrow">Platform</span>
+            <h2>Everything your project health needs</h2>
+        </div>
+
+        <div class="feature-grid">
+
+            <div class="card">
+                <span class="card-mark">01</span>
+                <h3>Project Analysis</h3>
+                <p>Deep analysis of your codebase structure, technologies, complexity, and architecture.</p>
+            </div>
+
+            <div class="card">
+                <span class="card-mark">02</span>
+                <h3>Risk Prediction</h3>
+                <p>Spot maintainability issues, risk areas, and technical debt before they become expensive.</p>
+            </div>
+
+            <div class="card">
+                <span class="card-mark">03</span>
+                <h3>Decision Tracking</h3>
+                <p>Keep your team aligned with project history, reports, and analysis milestones.</p>
+            </div>
+
+            <div class="card">
+                <span class="card-mark">04</span>
+                <h3>Smart Recommendations</h3>
+                <p>Receive AI-generated next steps that turn project analysis into concrete improvements.</p>
+            </div>
+
+        </div>
+
+    </section>
+
+    <section id="how-it-works" class="features">
+
+        <div class="section-heading">
+            <span class="eyebrow">Workflow</span>
+            <h2>From upload to insight in minutes</h2>
+        </div>
+
+        <div class="feature-grid">
+
+            <div class="card">
+                <span class="card-mark">A</span>
+                <h3>Upload Project</h3>
+                <p>Upload a ZIP file or connect a GitHub repository.</p>
+            </div>
+
+            <div class="card">
+                <span class="card-mark">B</span>
+                <h3>AI Analysis</h3>
+                <p>CodeCompass scans project structure, architecture, quality, and risk signals.</p>
+            </div>
+
+            <div class="card">
+                <span class="card-mark">C</span>
+                <h3>Risk Detection</h3>
+                <p>Potential risks and technical debt are grouped into readable findings.</p>
+            </div>
+
+            <div class="card">
+                <span class="card-mark">D</span>
+                <h3>Recommendations</h3>
+                <p>Use targeted recommendations to decide what to improve next.</p>
+            </div>
+
+        </div>
+
+    </section>
+
+</body>
+
+</html>

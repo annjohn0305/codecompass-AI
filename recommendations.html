@@ -1,0 +1,110 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Recommendations - CodeCompass AI</title>
+
+    <link
+        rel="stylesheet"
+        href="{% static 'css/project_pages.css' %}?v=4"
+    >
+    <link rel="stylesheet" href="{% static 'css/light.css' %}?v=1">
+    <link rel="stylesheet" href="{% static 'css/theme-toggle.css' %}?v=1">
+    <script src="{% static 'js/theme.js' %}?v=1"></script>
+
+</head>
+
+<body>
+
+    <main class="project-page">
+
+        <header class="page-header">
+
+            <div>
+
+                <h1 class="page-title">
+                    Recommendations
+                </h1>
+
+                <p class="page-subtitle">
+                    Review practical AI suggestions for the selected codebase.
+                </p>
+
+            </div>
+
+            <div class="project-control">
+
+                <label for="project-select">
+                    Project
+                </label>
+
+                <select
+                    id="project-select"
+                    class="project-select"
+                    data-project-select
+                    data-route-base="/recommendations/"
+                >
+
+                    {% for p in projects %}
+
+                    <option
+                        value="{{ p.id }}"
+                        {% if project.id == p.id %}
+                            selected
+                        {% endif %}
+                    >
+                        {{ p.name }}
+                    </option>
+
+                    {% endfor %}
+
+                </select>
+
+            </div>
+
+        </header>
+
+        {% if analysis %}
+
+        <div class="panel">
+
+            <h3>
+                AI Recommendations
+            </h3>
+
+            {{ analysis.recommendation_report|linebreaks }}
+
+        </div>
+
+        {% else %}
+
+        <p class="empty-state">
+            No analysis available.
+        </p>
+
+        {% endif %}
+
+        <a
+            href="{% url 'dashboard' %}"
+            class="back-btn"
+        >
+            Back To Dashboard
+        </a>
+
+    </main>
+
+    <script src="{% static 'js/project_pages.js' %}?v=3"></script>
+
+</body>
+
+</html>

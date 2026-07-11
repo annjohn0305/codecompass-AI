@@ -1,0 +1,92 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Settings - CodeCompass AI</title>
+    <link rel="stylesheet" href="{% static 'css/report.css' %}?v=6">
+    <link rel="stylesheet" href="{% static 'css/light.css' %}?v=1">
+    <link rel="stylesheet" href="{% static 'css/theme-toggle.css' %}?v=1">
+    <script src="{% static 'js/theme.js' %}?v=1"></script>
+</head>
+
+<body>
+
+<div class="container">
+
+    <aside class="sidebar">
+        <div class="sidebar-logo">
+            <img src="{% static 'images/logo.png' %}" alt="Logo">
+            <span>CodeCompass AI</span>
+        </div>
+
+        <ul class="sidebar-nav">
+            <li><a href="{% url 'dashboard' %}"><span class="nav-icon">D</span><span>Dashboard</span></a></li>
+            <li><a href="{% url 'projects' %}"><span class="nav-icon">P</span><span>Projects</span></a></li>
+            {% if latest_project %}
+            <li><a href="{% url 'timeline' latest_project.id %}"><span class="nav-icon">T</span><span>Timeline</span></a></li>
+            <li><a href="{% url 'project_report' latest_project.id %}"><span class="nav-icon">A</span><span>Reports</span></a></li>
+            <li><a href="{% url 'what_if_page' latest_project.id %}"><span class="nav-icon">W</span><span>What-If Simulator</span></a></li>
+            {% endif %}
+            <li class="active"><span class="nav-icon">S</span><span>Settings</span></li>
+        </ul>
+    </aside>
+
+    <main class="main-content">
+        <div class="report-header">
+            <div>
+                <span class="eyebrow">Workspace</span>
+                <h1>Settings</h1>
+                <p>Review your account and workspace preferences.</p>
+            </div>
+        </div>
+
+        <div class="report-grid">
+            <section class="panel">
+                <h3>Account</h3>
+                <p><strong>Name:</strong> {{ request.user.first_name|default:"Not set" }}</p>
+                <p><strong>Email:</strong> {{ request.user.email|default:request.user.username }}</p>
+            </section>
+
+            <section class="panel">
+                <h3>Workspace</h3>
+                <p><strong>Total projects:</strong> {{ projects|length }}</p>
+                <p><strong>Latest project:</strong> {% if latest_project %}{{ latest_project.name }}{% else %}None yet{% endif %}</p>
+            </section>
+
+            <section class="panel">
+                <h3>Preferences</h3>
+                <p>Theme: Dark teal and gold</p>
+                <p>Project insights: Enabled</p>
+                <p>AI simulation: Enabled for analyzed projects</p>
+            </section>
+
+            <section class="panel">
+                <h3>Shortcuts</h3>
+                <p>Use Dashboard to jump into the latest project.</p>
+                <p>Use Reports and What-If Simulator after a project has analysis data.</p>
+            </section>
+
+            <section class="panel">
+                <h3>Account</h3>
+                <p style="margin-bottom: 14px;"><strong>Security</strong></p>
+
+                <form method="post" action="{% url 'logout' %}" style="margin: 0;">
+                    {% csrf_token %}
+                    <button type="submit" class="download-btn" style="width: 100%; justify-content: center;">Logout</button>
+                </form>
+
+                <p style="color: var(--muted); margin-top: 14px;">Logging out will end your current session.</p>
+            </section>
+
+        </div>
+    </main>
+
+</div>
+
+</body>
+
+</html>

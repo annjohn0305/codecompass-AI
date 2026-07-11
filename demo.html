@@ -1,0 +1,90 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CodeCompass Demo</title>
+    <link rel="stylesheet" href="{% static 'css/demo.css' %}?v=6">
+    <script src="{% static 'js/theme.js' %}?v=1"></script>
+</head>
+
+<body>
+
+<div class="container">
+
+    <aside class="sidebar">
+
+        <div class="sidebar-logo">
+            <img src="{% static 'images/logo.png' %}" alt="Logo">
+            <span>CodeCompass AI</span>
+        </div>
+
+        <ul class="sidebar-nav">
+            <li><a href="{% url 'home' %}"><span class="nav-icon">H</span><span>Home</span></a></li>
+            <li class="active"><span class="nav-icon">D</span><span>Demo</span></li>
+            <li><a href="{% url 'login' %}"><span class="nav-icon">L</span><span>Login</span></a></li>
+            <li><a href="{% url 'signup' %}"><span class="nav-icon">S</span><span>Sign Up</span></a></li>
+        </ul>
+
+    </aside>
+
+    <main class="main-content">
+
+        <header class="page-header">
+            <span class="eyebrow">Preview Workspace</span>
+            <h1>Demo Dashboard</h1>
+            <p>Explore the kind of insights CodeCompass surfaces after analyzing a project.</p>
+        </header>
+
+        <div class="cards">
+            <div class="card"><span class="stat-kicker">Quality</span><h3>Health Score</h3><p>86%</p></div>
+            <div class="card"><span class="stat-kicker">Attention</span><h3>Risks Found</h3><p>3</p></div>
+            <div class="card"><span class="stat-kicker">Next Steps</span><h3>Recommendations</h3><p>7</p></div>
+            <div class="card"><span class="stat-kicker">Portfolio</span><h3>Projects Analyzed</h3><p>12</p></div>
+        </div>
+
+        <div class="dashboard-grid">
+
+            <div class="panel">
+                <span class="eyebrow">Risk Signals</span>
+                <h2>Predicted Risks</h2>
+                <ul>
+                    <li><span class="risk-dot high"></span>No Unit Tests</li>
+                    <li><span class="risk-dot medium"></span>Large auth.py File</li>
+                    <li><span class="risk-dot medium"></span>High Complexity Score</li>
+                </ul>
+            </div>
+
+            <div class="panel">
+                <span class="eyebrow">AI Guidance</span>
+                <h2>Recommendations</h2>
+                <ul>
+                    <li><span class="risk-dot ok"></span>Add Pytest Framework</li>
+                    <li><span class="risk-dot ok"></span>Refactor Authentication Module</li>
+                    <li><span class="risk-dot ok"></span>Split Large Files</li>
+                </ul>
+            </div>
+
+        </div>
+
+        <div class="timeline">
+            <span class="eyebrow">History</span>
+            <h2>Recent Decisions</h2>
+            <ul>
+                <li>Authentication System Added</li>
+                <li>SQLite Selected as Database</li>
+                <li>AI Recommendation Engine Added</li>
+                <li>Project Analysis Module Created</li>
+            </ul>
+        </div>
+
+    </main>
+
+</div>
+
+</body>
+
+</html>

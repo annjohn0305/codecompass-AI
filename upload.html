@@ -1,0 +1,172 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Upload Project - CodeCompass AI</title>
+    <link rel="stylesheet" href="{% static 'css/upload.css' %}?v=5">
+    <link rel="stylesheet" href="{% static 'css/light.css' %}?v=1">
+    <link rel="stylesheet" href="{% static 'css/theme-toggle.css' %}?v=1">
+    <script src="{% static 'js/theme.js' %}?v=1"></script>
+</head>
+
+<body>
+
+<div class="container">
+
+    <aside class="sidebar">
+
+        <div class="sidebar-logo">
+            <img src="{% static 'images/logo.png' %}" alt="Logo">
+            <span>CodeCompass AI</span>
+        </div>
+
+        <ul class="sidebar-nav">
+            <li><a href="{% url 'dashboard' %}"><span class="nav-icon">D</span><span>Dashboard</span></a></li>
+            <li class="active"><span class="nav-icon">P</span><span>Projects</span></li>
+            <li class="disabled"><span class="nav-icon">T</span><span>Timeline</span></li>
+            <li class="disabled"><span class="nav-icon">R</span><span>Risks</span></li>
+            <li class="disabled"><span class="nav-icon">I</span><span>Recommendations</span></li>
+            <li class="disabled"><span class="nav-icon">A</span><span>Reports</span></li>
+            <li class="disabled"><span class="nav-icon">W</span><span>What-If Simulator</span></li>
+        </ul>
+
+    </aside>
+
+    <main class="main-content">
+
+        <header class="page-header">
+            <span class="eyebrow">New Analysis</span>
+            <h1>Upload New Project</h1>
+            <p class="subtitle">
+                Upload a ZIP file or connect a GitHub repository to start a fresh project analysis.
+            </p>
+        </header>
+
+        <div class="tabs">
+            <button id="zip-btn" class="tab active" type="button">
+                Upload ZIP
+            </button>
+
+            <button id="github-btn" class="tab" type="button">
+                GitHub URL
+            </button>
+        </div>
+
+        <section class="upload-layout">
+
+            <form
+                id="zip-section"
+                method="POST"
+                enctype="multipart/form-data"
+                action="{% url 'upload_zip' %}"
+            >
+
+                {% csrf_token %}
+
+                <div class="upload-box">
+
+                    <span class="box-kicker">ZIP Upload</span>
+
+                    <h2>Upload ZIP Project</h2>
+
+                    <input
+                        type="text"
+                        name="project_name"
+                        placeholder="Project Name"
+                        class="github-input"
+                        required
+                    >
+
+                    <input
+                        type="file"
+                        name="zip_file"
+                        accept=".zip"
+                        required
+                    >
+
+                    <button type="submit" class="browse-btn">
+                        Upload & Analyze
+                    </button>
+
+                </div>
+
+            </form>
+
+            <form
+                id="github-section"
+                method="POST"
+                action="{% url 'save_project' %}"
+                style="display:none;"
+            >
+
+                {% csrf_token %}
+
+                <div class="upload-box">
+
+                    <span class="box-kicker">Repository</span>
+
+                    <h2>Connect GitHub Repository</h2>
+
+                    <label class="project-label" for="github-project-name">
+                        Project Name
+                    </label>
+
+                    <input
+                        id="github-project-name"
+                        type="text"
+                        name="project_name"
+                        class="github-input"
+                        placeholder="Enter project name"
+                        required
+                    >
+
+                    <label class="project-label" for="github-url">
+                        GitHub URL
+                    </label>
+
+                    <input
+                        id="github-url"
+                        type="text"
+                        name="github_url"
+                        class="github-input"
+                        placeholder="https://github.com/username/repository"
+                        required
+                    >
+
+                    <button type="submit" class="browse-btn">
+                        Analyze Repository
+                    </button>
+
+                </div>
+
+            </form>
+
+            <aside class="tips">
+
+                <span class="box-kicker">Checklist</span>
+                <h3>Tips</h3>
+
+                <ul>
+                    <li>Upload source code only</li>
+                    <li>Maximum size: 100MB</li>
+                    <li>Supports Python, Java, JavaScript</li>
+                    <li>Django, Flask and React projects supported</li>
+                </ul>
+
+            </aside>
+
+        </section>
+
+    </main>
+
+</div>
+
+<script src="{% static 'js/upload.js' %}?v=5"></script>
+
+</body>
+
+</html>

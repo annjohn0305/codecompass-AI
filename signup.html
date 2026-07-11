@@ -1,0 +1,124 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign Up - CodeCompass AI</title>
+    <link rel="stylesheet" href="{% static 'css/signup.css' %}?v=5">
+    <link rel="stylesheet" href="{% static 'css/light.css' %}?v=1">
+    <link rel="stylesheet" href="{% static 'css/theme-toggle.css' %}?v=1">
+    <script src="{% static 'js/theme.js' %}?v=1"></script>
+</head>
+
+<body>
+
+<main class="auth-page">
+
+    <section class="auth-intro">
+        <a class="brand" href="{% url 'home' %}">
+            <img src="{% static 'images/logo.png' %}" alt="CodeCompass AI">
+            <span>CodeCompass AI</span>
+        </a>
+
+        <span class="eyebrow">Start Analyzing</span>
+
+        <h1>
+            Create a workspace for stronger project decisions.
+        </h1>
+
+        <p>
+            Upload code, review risks, generate recommendations, and keep your project health visible from day one.
+        </p>
+    </section>
+
+    <section class="signup-card">
+
+        <div class="card-header">
+            <h2>Create Account</h2>
+            <p class="subtitle">Create your account to get started</p>
+        </div>
+
+        {% if messages %}
+            {% for message in messages %}
+                <p class="form-message">
+                    {{ message }}
+                </p>
+            {% endfor %}
+        {% endif %}
+
+        <form method="POST">
+
+            {% csrf_token %}
+
+            <label for="fullname">Full Name</label>
+            <input
+                id="fullname"
+                type="text"
+                name="fullname"
+                placeholder="Enter your full name"
+                required
+            >
+
+            <label for="email">Email</label>
+            <input
+                id="email"
+                type="email"
+                name="email"
+                placeholder="Enter your email"
+                required
+            >
+
+            <label for="phone">Phone Number</label>
+            <input
+                id="phone"
+                type="tel"
+                name="phone"
+                placeholder="Enter your phone number"
+            >
+
+            <label for="password">Password</label>
+            <input
+                id="password"
+                type="password"
+                name="password"
+                placeholder="Enter your password"
+                required
+            >
+
+            <label for="confirm-password">Confirm Password</label>
+            <input
+                id="confirm-password"
+                type="password"
+                name="confirm_password"
+                placeholder="Confirm your password"
+                required
+            >
+
+            <div class="terms">
+                <input type="checkbox" id="terms" required>
+                <label for="terms">
+                    I agree to the Terms & Conditions
+                </label>
+            </div>
+
+            <button type="submit">
+                Sign Up
+            </button>
+
+        </form>
+
+        <p class="signin-link">
+            Already have an account?
+            <a href="{% url 'login' %}">Sign In</a>
+        </p>
+
+    </section>
+
+</main>
+
+</body>
+
+</html>

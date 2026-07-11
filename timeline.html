@@ -1,0 +1,140 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Timeline - CodeCompass AI</title>
+
+    <link
+        rel="stylesheet"
+        href="{% static 'css/project_pages.css' %}?v=4"
+    >
+    <link rel="stylesheet" href="{% static 'css/light.css' %}?v=1">
+    <link rel="stylesheet" href="{% static 'css/theme-toggle.css' %}?v=1">
+    <script src="{% static 'js/theme.js' %}?v=1"></script>
+
+</head>
+
+<body>
+
+    <main class="project-page">
+
+        <header class="page-header">
+
+            <div>
+
+                <h1 class="page-title">
+                    Project Timeline
+                </h1>
+
+                <p class="page-subtitle">
+                    Follow the analysis milestones for the selected project.
+                </p>
+
+            </div>
+
+            <div class="project-control">
+
+                <label for="project-select">
+                    Project
+                </label>
+
+                <select
+                    id="project-select"
+                    class="project-select"
+                    data-project-select
+                    data-route-base="/timeline/"
+                >
+
+                    {% for p in projects %}
+
+                    <option
+                        value="{{ p.id }}"
+                        {% if project.id == p.id %}
+                            selected
+                        {% endif %}
+                    >
+                        {{ p.name }}
+                    </option>
+
+                    {% endfor %}
+
+                </select>
+
+            </div>
+
+        </header>
+
+        {% if project %}
+
+        <div class="panel">
+
+            <h3>
+                {{ project.name }}
+            </h3>
+
+            <div class="timeline-list">
+
+                <div class="timeline-item">
+                    Project Uploaded: {{ project.created_at|date:"F j, Y, h:i A" }}
+                </div>
+
+                {% if project.analysis %}
+
+                <div class="timeline-item">
+                    Analysis Generated: {{ project.analysis.created_at|date:"F j, Y, h:i A" }}
+                </div>
+
+                <div class="timeline-item">
+                    Architecture Analysis Complete
+                </div>
+
+                <div class="timeline-item">
+                    Technical Debt Analysis Complete
+                </div>
+
+                <div class="timeline-item">
+                    Risk Analysis Complete
+                </div>
+
+                <div class="timeline-item">
+                    Recommendations Generated
+                </div>
+
+                {% endif %}
+
+            </div>
+
+        </div>
+
+        {% else %}
+
+        <p class="empty-state">
+            No project selected.
+        </p>
+
+        {% endif %}
+
+        <a
+            href="{% url 'dashboard' %}"
+            class="back-btn"
+        >
+            Back To Dashboard
+        </a>
+
+    </main>
+
+    <script src="{% static 'js/project_pages.js' %}?v=3"></script>
+
+</body>
+
+</html>

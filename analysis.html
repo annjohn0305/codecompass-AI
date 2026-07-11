@@ -1,0 +1,229 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Analysis Results - CodeCompass AI</title>
+
+    <link rel="stylesheet"
+          href="{% static 'css/analysis.css' %}">
+
+    <script src="{% static 'js/theme.js' %}?v=1"></script>
+</head>
+
+<body>
+
+<div class="container">
+
+    <div class="analysis-card">
+
+        <h1>
+            Project Analysis Results
+        </h1>
+
+        {% if project %}
+
+        <p class="project-name">
+
+            Project:
+            <strong>
+                {{ project.name }}
+            </strong>
+
+        </p>
+
+        {% endif %}
+
+        <div class="results-grid">
+
+            <!-- Health Score -->
+
+            <div class="result-card">
+
+                <h3>
+                    Health Score
+                </h3>
+
+                <h1 class="highlight">
+
+                    {% if analysis %}
+                        {{ analysis.health_score }}%
+                    {% else %}
+                        0%
+                    {% endif %}
+
+                </h1>
+
+            </div>
+
+            <!-- Total Files -->
+
+            <div class="result-card">
+
+                <h3>
+                    Total Files
+                </h3>
+
+                <h1>
+
+                    {% if analysis %}
+                        {{ analysis.total_files }}
+                    {% else %}
+                        0
+                    {% endif %}
+
+                </h1>
+
+            </div>
+
+            <!-- Lines Of Code -->
+
+            <div class="result-card">
+
+                <h3>
+                    Lines Of Code
+                </h3>
+
+                <h1>
+
+                    {% if analysis %}
+                        {{ analysis.lines_of_code }}
+                    {% else %}
+                        0
+                    {% endif %}
+
+                </h1>
+
+            </div>
+
+            <!-- Risk Level -->
+
+            <div class="result-card">
+
+                <h3>
+                    Risk Level
+                </h3>
+
+                <h1>
+
+                    {% if analysis %}
+
+                        {% if analysis.risks_found == 0 %}
+                            Low
+
+                        {% elif analysis.risks_found == 1 %}
+                            Medium
+
+                        {% else %}
+                            High
+
+                        {% endif %}
+
+                    {% else %}
+
+                        Low
+
+                    {% endif %}
+
+                </h1>
+
+            </div>
+
+            <!-- Recommendations -->
+
+            <div class="result-card">
+
+                <h3>
+                    Recommendations
+                </h3>
+
+                <p>
+
+                    {% if analysis %}
+
+                        {% if analysis.recommendations == 0 %}
+                            No Changes Needed
+
+                        {% elif analysis.recommendations == 1 %}
+                            Minor Improvements
+
+                        {% elif analysis.recommendations == 2 %}
+                            Refactoring Suggested
+
+                        {% else %}
+                            Major Improvements Needed
+
+                        {% endif %}
+
+                    {% else %}
+
+                        No Data
+
+                    {% endif %}
+
+                </p>
+
+            </div>
+
+            <!-- Technologies -->
+
+            <div class="result-card">
+
+                <h3>
+                    Technologies
+                </h3>
+
+                <p>
+
+                    {% if analysis %}
+                        <div class="tech-container">
+
+{% for tech in analysis.technologies.split|default:'' %}
+
+{% endfor %}
+
+<span class="tech-badge">
+    {{ analysis.technologies }}
+</span>
+
+</div>
+                    {% else %}
+                        Not Detected
+                    {% endif %}
+
+                </p>
+
+            </div>
+
+        </div>
+
+        <div class="buttons">
+
+            <a href="{% url 'dashboard' %}"
+               class="action-btn">
+
+                Back to Dashboard
+
+            </a>
+
+            <a href="{% url 'report' %}"
+               class="action-btn">
+
+                View Report
+
+            </a>
+
+        </div>
+
+    </div>
+
+</div>
+
+</body>
+</html>
